@@ -1,0 +1,963 @@
+/* =========================
+   GLOBAL
+========================= */
+
+@font-face{
+    font-family:"YuriFont";
+    src:url("font.ttf");
+}
+
+:root{
+    --purple:#c061ff;
+    --pink:#ff66c4;
+    --dark:#1b0026;
+    --paper:rgba(255,240,250,0.92);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"YuriFont"!important;
+}
+
+body{
+    background:
+    radial-gradient(circle at top left,#5e1f7a 0%,transparent 30%),
+    radial-gradient(circle at bottom right,#7b2cbf 0%,transparent 30%),
+    linear-gradient(to bottom right,#1b0026,#34124d);
+
+    overflow:hidden;
+    height:100vh;
+}
+
+/* =========================
+   INTRO
+========================= */
+
+#intro{
+    position:relative;
+    width:100%;
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    text-align:center;
+    color:white;
+    overflow:hidden;
+}
+
+#intro h1{
+    font-size:7rem;
+    margin-bottom:45px;
+    z-index:2;
+}
+
+#intro p{
+    font-size:2.6rem;
+    margin-bottom:55px;
+    z-index:2;
+}
+
+/* =========================
+   NOTE
+========================= */
+
+#noteScreen{
+    display:none;
+    width:100%;
+    height:100vh;
+    overflow-y:auto;
+    padding:50px;
+    justify-content:center;
+}
+
+.note{
+    position:relative;
+    width:850px;
+    max-width:95%;
+    margin:auto;
+
+    background:var(--paper);
+
+    border-radius:30px;
+
+    padding:80px;
+
+    overflow:hidden;
+
+    box-shadow:0 0 40px rgba(0,0,0,.45);
+}
+
+.note *{
+    position:relative;
+    z-index:5;
+}
+
+.note h1{
+    text-align:center;
+    font-size:4rem;
+    color:#5a1f67;
+    margin-bottom:40px;
+}
+
+.note p{
+    font-size:1.5rem;
+    line-height:2;
+    text-align:center;
+    margin-bottom:50px;
+
+    padding-inline:110px;
+
+    color:#4a214f;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button{
+    padding:22px 42px;
+
+    border:none;
+    border-radius:22px;
+
+    background:
+    linear-gradient(
+        to right,
+        var(--purple),
+        var(--pink)
+    );
+
+    color:white;
+
+    font-size:1.45rem;
+
+    cursor:pointer;
+
+    transition:.35s;
+}
+
+button:hover{
+    transform:scale(1.08) translateY(-3px);
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:70px;
+}
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back-btn{
+
+    position:fixed;
+
+    top:25px;
+    left:25px;
+
+    z-index:999999;
+
+    padding:14px 26px;
+
+    font-size:1rem;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            to right,
+            #b84dff,
+            #ff66c4
+        );
+
+    box-shadow:
+        0 0 18px rgba(192,97,255,.35);
+
+    backdrop-filter:blur(10px);
+}
+
+.back-btn:hover{
+
+    transform:
+        translateY(-2px)
+        scale(1.05);
+}
+
+/* =========================
+   PHOTOS
+========================= */
+
+.edge-photo{
+    position:absolute!important;
+
+    width:105px;
+    height:120px;
+
+    object-fit:cover;
+
+    border-radius:14px;
+
+    background:white;
+
+    padding:5px;
+    border:5px solid white;
+
+    z-index:0!important;
+
+    pointer-events:auto;
+    cursor:grab;
+
+    box-shadow:0 0 18px rgba(0,0,0,.28);
+}
+
+/* PHOTO POSITIONS */
+
+.p1{top:2%;left:8px;transform:rotate(-13deg);}
+.p2{top:7%;right:35px;transform:rotate(11deg);}
+.p3{top:14%;left:40px;transform:rotate(-7deg);}
+.p4{top:21%;right:10px;transform:rotate(14deg);}
+.p5{top:28%;left:18px;transform:rotate(-15deg);}
+.p6{top:35%;right:45px;transform:rotate(8deg);}
+.p7{top:42%;left:50px;transform:rotate(-10deg);}
+.p8{top:49%;right:15px;transform:rotate(13deg);}
+.p9{top:56%;left:12px;transform:rotate(-12deg);}
+.p10{top:63%;right:40px;transform:rotate(7deg);}
+.p11{top:70%;left:42px;transform:rotate(-8deg);}
+.p12{top:77%;right:8px;transform:rotate(15deg);}
+.p13{top:83%;left:22px;transform:rotate(-14deg);}
+.p14{top:88%;right:48px;transform:rotate(9deg);}
+.p15{top:92%;left:55px;transform:rotate(-9deg);}
+.p16{top:95%;right:20px;transform:rotate(12deg);}
+
+/* =========================
+   DECOR HEARTS
+========================= */
+
+.decor{
+    position:absolute!important;
+
+    font-size:2rem;
+
+    z-index:2!important;
+
+    animation:floatSlow 6s ease-in-out infinite;
+}
+
+.h1{top:90px;left:35px;}
+.h2{top:220px;right:35px;}
+.h3{top:470px;left:55px;}
+.h4{top:700px;right:50px;}
+.h5{top:980px;left:45px;}
+.h6{top:1240px;right:40px;}
+.h7{top:1510px;left:60px;}
+.h8{top:1780px;right:45px;}
+
+/* =========================
+   FLOATING HEARTS
+========================= */
+
+.float-heart{
+    position:absolute;
+    font-size:1.5rem;
+    animation:float 6s infinite ease-in-out;
+}
+
+.f1{top:15%;left:20%;}
+.f2{top:30%;right:18%;}
+.f3{bottom:20%;left:25%;}
+.f4{bottom:15%;right:25%;}
+.f5{top:50%;left:10%;}
+.f6{top:60%;right:10%;}
+
+/* =========================
+   BACKGROUND HEARTS
+========================= */
+
+.bg-heart{
+    position:fixed;
+
+    color:rgba(255,255,255,.13);
+
+    font-size:4rem;
+
+    filter:blur(10px);
+
+    z-index:0;
+
+    pointer-events:none;
+
+    animation:bgFloat 16s ease-in-out infinite;
+}
+
+.bgh1{left:5%;top:10%;}
+.bgh2{right:8%;top:20%;}
+.bgh3{left:12%;bottom:20%;}
+.bgh4{right:15%;bottom:12%;}
+.bgh5{left:45%;top:8%;}
+.bgh6{right:40%;bottom:8%;}
+.bgh7{left:25%;top:50%;}
+.bgh8{right:25%;top:65%;}
+
+/* =========================
+   BLURS
+========================= */
+
+.blur{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:.45;
+}
+
+.b1{
+    width:300px;
+    height:300px;
+    background:#a855f7;
+    top:-80px;
+    left:-80px;
+}
+
+.b2{
+    width:250px;
+    height:250px;
+    background:#ff4da6;
+    bottom:-50px;
+    right:-50px;
+}
+
+.b3{
+    width:200px;
+    height:200px;
+    background:#c77dff;
+    top:40%;
+    left:60%;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes float{
+    50%{
+        transform:translateY(-15px);
+    }
+}
+
+@keyframes floatSlow{
+    50%{
+        transform:translateY(-8px);
+    }
+}
+
+@keyframes bgFloat{
+    50%{
+        transform:
+        translateY(-25px)
+        scale(1.08);
+    }
+}
+
+/* =========================
+   AUDIO POPUP
+========================= */
+
+#audioPopup{
+
+    position:fixed;
+
+    bottom:25px;
+    right:25px;
+
+    background:
+        rgba(25,10,35,0.82);
+
+    backdrop-filter:blur(12px);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    color:white;
+
+    padding:
+        16px 22px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    z-index:999999;
+
+    opacity:0;
+
+    transform:
+        translateY(30px)
+        scale(.95);
+
+    transition:.45s;
+
+    box-shadow:
+        0 0 25px rgba(192,97,255,.25);
+
+    pointer-events:none;
+}
+
+#audioPopup.showPopup{
+
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.audioIcon{
+
+    font-size:1.5rem;
+
+    animation:
+        pulseIcon 1.5s infinite;
+}
+
+#audioText{
+
+    font-size:1.1rem;
+
+    letter-spacing:.5px;
+}
+
+@keyframes pulseIcon{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.15);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* =========================
+   SECRET BOX
+========================= */
+
+#secretBox{
+
+    position:fixed;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:320px;
+
+    padding:25px;
+
+    background:
+        rgba(35,10,45,.95);
+
+    border-radius:20px;
+
+    z-index:999999;
+
+    display:none;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 40px rgba(0,0,0,.5);
+}
+
+#secretBox h2{
+
+    color:white;
+
+    margin-bottom:20px;
+}
+
+#secretInput{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    margin-bottom:15px;
+
+    outline:none;
+
+    font-size:1rem;
+}
+
+#secretError{
+
+    color:#ff9ad7;
+
+    margin-top:10px;
+
+    min-height:20px;
+}
+
+/* =========================
+   PHOTO SECRET
+========================= */
+
+#photoSecret{
+
+    position:absolute;
+
+    top:57%;
+    right:40px;
+
+    z-index:0;
+
+    text-align:center;
+
+    color:#5a1f67;
+
+    font-size:1.1rem;
+
+    opacity:0;
+
+    transition:.4s;
+}
+
+/* =========================
+   PHOTO 8 SECRET
+========================= */
+
+.photoSecretWrap{
+
+    position:absolute;
+
+    top:49%;
+    right:15px;
+
+    width:105px;
+    height:120px;
+
+    z-index:2;
+}
+
+.photoSecretWrap .p8{
+
+    position:absolute;
+
+    inset:0;
+
+    transition:.4s;
+}
+
+#photoSecret{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    flex-direction:column;
+
+    text-align:center;
+
+    font-size:1rem;
+
+    color:#5a1f67;
+
+    z-index:1;
+
+    pointer-events:none;
+}
+
+/* REAL FADE EFFECT */
+
+.photoSecretWrap:hover .p8{
+
+    opacity:.3;
+}
+
+/* =========================
+   SECRET NOTE
+========================= */
+
+#secretNote{
+
+    position:fixed;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    background:white;
+
+    color:#5a1f67;
+
+    padding:25px 35px;
+
+    border-radius:20px;
+
+    z-index:999999;
+
+    display:none;
+
+    font-size:1.3rem;
+
+    box-shadow:
+        0 0 35px rgba(0,0,0,.3);
+}
+
+/* =========================
+   FINAL SECRET BUTTON
+========================= */
+
+#finalSecretBtn{
+
+    position:fixed;
+
+    bottom:25px;
+    left:25px;
+
+    display:none;
+
+    z-index:999999;
+}
+
+/* CLOSE BUTTON */
+
+#closeSecretBox{
+
+    position:absolute;
+
+    top:10px;
+    right:10px;
+
+    width:35px;
+    height:35px;
+
+    padding:0;
+
+    border-radius:50%;
+
+    font-size:1rem;
+
+    background:#ff66c4;
+}
+
+/* =========================
+   NO TEXT SELECT
+========================= */
+
+body{
+    user-select:none;
+    -webkit-user-select:none;
+}
+
+/* =========================
+   SECRET PROGRESS
+========================= */
+
+#secretProgress{
+
+    position:fixed;
+
+    bottom:20px;
+    left:20px;
+
+    width:240px;
+
+    background:
+        rgba(20,10,30,.82);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:18px;
+
+    padding:14px;
+
+    z-index:999999;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 0 25px rgba(0,0,0,.3);
+}
+
+#secretProgressText{
+
+    color:white;
+
+    font-size:1rem;
+
+    margin-bottom:10px;
+
+    text-align:center;
+}
+
+#secretBar{
+
+    width:100%;
+    height:14px;
+
+    background:
+        rgba(255,255,255,.1);
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+#secretFill{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            to right,
+            #c061ff,
+            #ff66c4
+        );
+
+    transition:.4s;
+}
+
+/* =========================
+   CLICKABLE SECRET WORD
+========================= */
+
+.secretWord{
+
+    color:#b84dff;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    text-shadow:
+        0 0 10px rgba(192,97,255,.25);
+}
+
+.secretWord:hover{
+
+    opacity:.7;
+
+    transform:scale(1.05);
+}
+
+/* =========================
+   FOUND POPUP
+========================= */
+
+#foundPopup{
+
+    position:fixed;
+
+    top:50%;
+    left:68%;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.8);
+
+    width:260px;
+
+    padding:28px;
+
+    border-radius:24px;
+
+    background:
+        rgba(35,10,45,.96);
+
+    backdrop-filter:blur(14px);
+
+    color:white;
+
+    text-align:center;
+
+    z-index:999999;
+
+    opacity:0;
+
+    transition:.45s;
+
+    box-shadow:
+        0 0 35px rgba(0,0,0,.45);
+}
+
+#foundPopup h2{
+
+    font-size:2rem;
+
+    margin-bottom:10px;
+
+    color:#ff9ae6;
+}
+
+#foundPopup p{
+
+    font-size:1.1rem;
+
+    opacity:.8;
+}
+
+.showFound{
+
+    opacity:1!important;
+
+    transform:
+        translate(-50%,-50%)
+        scale(1)!important;
+}
+
+#closeFoundPopup{
+
+    position:absolute;
+
+    top:12px;
+    right:12px;
+
+    width:34px;
+    height:34px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#ff66c4;
+
+    color:white;
+
+    font-size:1rem;
+
+    cursor:pointer;
+
+    padding:0;
+}
+
+#closeFoundPopup:hover{
+
+    transform:scale(1.08);
+}
+
+/* RESET BUTTON */
+
+#resetSecretsBtn{
+
+    margin-top:12px;
+
+    width:100%;
+
+    padding:10px;
+
+    font-size:.9rem;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            to right,
+            #9b59ff,
+            #ff66c4
+        );
+}
+
+/* =========================
+   AUDIO PROGRESS
+========================= */
+
+#audioProgress{
+
+    position:fixed;
+
+    bottom:120px;
+    left:20px;
+
+    width:240px;
+
+    background:
+        rgba(20,10,30,.82);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:18px;
+
+    padding:14px;
+
+    z-index:999999;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 0 25px rgba(0,0,0,.3);
+}
+
+#audioProgressText{
+
+    color:white;
+
+    font-size:1rem;
+
+    margin-bottom:10px;
+
+    text-align:center;
+}
+
+#audioBar{
+
+    width:100%;
+    height:14px;
+
+    background:
+        rgba(255,255,255,.1);
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+#audioFill{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            to right,
+            #c061ff,
+            #ff66c4
+        );
+
+    transition:.4s;
+}

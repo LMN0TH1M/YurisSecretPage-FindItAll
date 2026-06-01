@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>For Yuri 💜</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- =========================
+     GLOBAL BACKGROUND HEARTS
+========================= -->
+
+<div class="bg-heart bgh1">💜</div>
+<div class="bg-heart bgh2">❤️</div>
+<div class="bg-heart bgh3">💖</div>
+<div class="bg-heart bgh4">💕</div>
+<div class="bg-heart bgh5">💜</div>
+<div class="bg-heart bgh6">❤️</div>
+<div class="bg-heart bgh7">💜</div>
+<div class="bg-heart bgh8">❤️</div>
+
+<!-- =========================
+     INTRO SCREEN
+========================= -->
+
+<div id="intro">
+
+    <div class="blur b1"></div>
+    <div class="blur b2"></div>
+    <div class="blur b3"></div>
+
+    <div class="float-heart f1">💜</div>
+    <div class="float-heart f2">❤️</div>
+    <div class="float-heart f3">💜</div>
+    <div class="float-heart f4">❤️</div>
+    <div class="float-heart f5">💜</div>
+    <div class="float-heart f6">❤️</div>
+
+    <h1>Hey Yuri 💜</h1>
+
+    <p>I made something special for you...</p>
+
+    <button onclick="openNote()">
+        Open Note 💌
+    </button>
+
+</div>
+
+<!-- =========================
+     NOTE SCREEN
+========================= -->
+
+<div id="noteScreen">
+
+    <div class="note">
+
+        <!-- HEART DECOR -->
+
+        <div class="decor h1">💜</div>
+        <div class="decor h2">❤️</div>
+        <div class="decor h3">💜</div>
+        <div class="decor h4">❤️</div>
+        <div class="decor h5">💜</div>
+        <div class="decor h6">❤️</div>
+        <div class="decor h7">💜</div>
+        <div class="decor h8">❤️</div>
+
+        <!-- PHOTOS -->
+
+        <img src="1.png" class="edge-photo p1">
+        <img src="2.png" class="edge-photo p2">
+        <img src="3.png" class="edge-photo p3">
+        <img src="4.png" class="edge-photo p4">
+        <img src="5.png" class="edge-photo p5">
+        <img src="6.png" class="edge-photo p6">
+        <img src="7.png" class="edge-photo p7">
+
+        <div class="photoSecretWrap">
+
+            <img src="8.png" class="edge-photo p8">
+
+            <div id="photoSecret">
+                Press<br>
+                Enter (a0)
+            </div>
+
+        </div>
+
+        <img src="9.png" class="edge-photo p9">
+        <img src="10.png" class="edge-photo p10">
+        <img src="11.png" class="edge-photo p11">
+        <img src="12.png" class="edge-photo p12">
+        <img src="13.png" class="edge-photo p13">
+        <img src="14.png" class="edge-photo p14">
+        <img src="15.png" class="edge-photo p15">
+        <img src="16.png" class="edge-photo p16">
+
+        <!-- NOTE TEXT -->
+
+        <h1>ello mor so.. ❤️</h1>
+
+            <p>
+                I felt like i haven't really shown how much u mean to me,
+                that you are really important to me
+                and that i love you a lot... so i decided to make a
+                little proyect which is this one right here <br><br>
+
+                i really enjoy spending time with you, not only cus we usually have good time together but i like your company even if sometimes when playin the conversation vanishes i like that we are still there together with eachother just trying to have our time there
+            </p>
+
+            <p>
+                I love how we sometimes go against people in games som others we just fighting with roblox kids and honestly its fun cus its with you.<br><br>
+
+                But what i mean is that i enjoy spending time with you, i love when you laugh i love to hear you talk even if you are angry at me ima have my shield up in case u throw me something but im gonna be there with you
+            </p>
+
+            <p>
+                I'd keep on studying your language and religion so i can be in your life as your religion and family are waiting to 
+
+                <span class="secretWord"
+                    onclick="showSeeSecret()">
+                    SEE
+                </span>
+            </p>
+
+        
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <button class="back-btn" onclick="goBack()">  
+            Main Menu
+            </button>
+
+            <button onclick="playRandomAudio()">
+                Press if you miss me
+            </button>
+
+            <button onclick="spawnHearts()">
+                loviu
+            </button>
+
+        </div>
+
+        <audio id="audioPlayer"></audio>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     SCRIPT
+========================= -->
+
+<div id="audioPopup">
+
+    <span class="audioIcon">🔊</span>
+
+    <span id="audioText">
+        Playing: 1/20
+    </span>
+
+</div>
+
+<!-- =========================
+     SECRET INPUT WINDOW
+========================= -->
+
+<div id="secretBox">
+
+    <button id="closeSecretBox"
+    onclick="closeSecretBox()">
+        ✕
+    </button>
+
+    <h2>Enter Code</h2>
+
+    <input
+        type="text"
+        id="secretInput"
+        placeholder="code..."
+    >
+
+    <button onclick="checkSecretCode()">
+        Enter
+    </button>
+
+    <p id="secretError"></p>
+
+</div>
+
+<!-- =========================
+     PHOTO 8 SECRET
+========================= -->
+
+<div id="photoSecret">
+    Press<br>
+    Enter (a0)
+</div>
+
+<!-- =========================
+     SECRET NOTE
+========================= -->
+
+<div id="secretNote"></div>
+
+<!-- =========================
+     FINAL SECRET BUTTON
+========================= -->
+
+<button
+    id="finalSecretBtn"
+    onclick="finishSecrets()"
+>
+    u finished!
+</button>
+
+<!-- =========================
+     AUDIO PROGRESS
+========================= -->
+
+<div id="audioProgress">
+
+    <div id="audioProgressText">
+        Audios Found: 0/20
+    </div>
+
+    <div id="audioBar">
+        <div id="audioFill"></div>
+    </div>
+
+</div>
+
+<!-- =========================
+     SECRET PROGRESS
+========================= -->
+
+<div id="secretProgress">
+
+    <div id="secretProgressText">
+        Secrets: 0/5
+    </div>
+
+    <div id="secretBar">
+        <div id="secretFill"></div>
+    </div>
+
+    <button
+        id="resetSecretsBtn"
+        onclick="resetProgress()"
+    >
+        Reset Progress
+    </button>
+
+    
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
