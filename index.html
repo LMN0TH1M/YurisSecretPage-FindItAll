@@ -14,7 +14,33 @@
 
 <body>
 
-<!-- =========================
+<div id="loginScreen">
+
+    <div id="loginBox">
+
+        <h2>Access Terminal</h2>
+
+        <p>Enter password:</p>
+
+        <input
+            id="passwordInput"
+            type="password"
+            autocomplete="off"
+        >
+
+        <button onclick="unlockSite()">
+            Enter
+        </button>
+
+        <p id="loginError"></p>
+
+    </div>
+
+</div>
+
+<div id="mainSite" style="display:none;">
+
+    <!-- =========================
      GLOBAL BACKGROUND HEARTS
 ========================= -->
 
@@ -269,3 +295,5 @@
 
 </body>
 </html>
+
+</div>

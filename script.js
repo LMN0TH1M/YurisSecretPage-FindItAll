@@ -1,9 +1,72 @@
+function unlockSite(){
+
+    const pass =
+        document
+        .getElementById(
+            "passwordInput"
+        )
+        .value;
+
+    const error =
+        document
+        .getElementById(
+            "loginError"
+        );
+
+    if(pass==="Potato"){
+
+        document
+            .getElementById(
+                "loginScreen"
+            )
+            .style.display="none";
+
+        document
+            .getElementById(
+                "mainSite"
+            )
+            .style.display="block";
+    }
+
+    else{
+
+        error.innerHTML =
+            "Access denied";
+    }
+}
+
+document.addEventListener(
+    "DOMContentLoaded",
+    ()=>{
+
+        const input =
+            document
+            .getElementById(
+                "passwordInput"
+            );
+
+        input.addEventListener(
+            "keydown",
+            e=>{
+
+                if(
+                    e.key==="Enter"
+                ){
+
+                    unlockSite();
+                }
+            }
+        );
+    }
+);
+
 /* =========================
    ELEMENTS
 ========================= */
 
 const TOTAL_SECRETS = 6;
 let noteOpen = false;
+let popupOpen = false;
 
 const intro=
 document.getElementById("intro");
@@ -638,22 +701,45 @@ function showSeeSecret(){
    ENTER TERMINAL
 ========================= */
 
-document.addEventListener("keydown",e=>{
+document.addEventListener("keydown", e => {
 
-    if(e.key==="Enter"){
+    if (e.key !== "Enter") return;
 
-        document
-        .getElementById("secretBox")
-        .style.display="block";
+    /* only inside note */
 
-        document
-        .getElementById("secretInput")
+    if (!noteOpen) return;
+
+    /* popup visible? do nothing */
+
+    if (popupOpen) return;
+
+    const secretBox =
+        document.getElementById(
+            "secretBox"
+        );
+
+    /* already typing? */
+
+    if (
+        document.activeElement &&
+        document.activeElement.id ===
+        "secretInput"
+    ) {
+        return;
+    }
+
+    secretBox.style.display =
+        "block";
+
+    document
+        .getElementById(
+            "secretInput"
+        )
         .focus();
 
-        secrets.a0=true;
+    secrets.a0 = true;
 
-        checkAllSecrets();
-    }
+    checkAllSecrets();
 });
 
 /* =========================
