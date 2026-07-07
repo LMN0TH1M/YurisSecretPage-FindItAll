@@ -1,241 +1,45 @@
-function unlockSite(){
+/* =========================
+   LOGIN
+========================= */
 
-    const pass =
-        document
-        .getElementById(
-            "passwordInput"
-        )
-        .value;
+function unlockSite() {
+    const pass = document.getElementById("passwordInput").value;
+    const error = document.getElementById("loginError");
 
-    const error =
-        document
-        .getElementById(
-            "loginError"
-        );
-
-    if(pass==="Potato"){
-
-        document
-            .getElementById(
-                "loginScreen"
-            )
-            .style.display="none";
-
-        document
-            .getElementById(
-                "mainSite"
-            )
-            .style.display="block";
-    }
-
-    else{
-
-        error.innerHTML =
-            "Access denied";
+    if (pass === "Potato") {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("mainSite").style.display = "block";
+    } else {
+        error.innerHTML = "Access denied";
     }
 }
 
-document.addEventListener(
-    "DOMContentLoaded",
-    ()=>{
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("passwordInput");
 
-        const input =
-            document
-            .getElementById(
-                "passwordInput"
-            );
-
-        input.addEventListener(
-            "keydown",
-            e=>{
-
-                if(
-                    e.key==="Enter"
-                ){
-
-                    unlockSite();
-                }
-            }
-        );
-    }
-);
+    input.addEventListener("keydown", e => {
+        if (e.key === "Enter") unlockSite();
+    });
+});
 
 /* =========================
-   ELEMENTS
+   ELEMENTS / STATE
 ========================= */
 
-const TOTAL_SECRETS = 6;
+const TOTAL_SECRETS = 8;
+
 let noteOpen = false;
 let popupOpen = false;
 
-const intro=
-document.getElementById("intro");
-
-const noteScreen=
-document.getElementById("noteScreen");
-
-const player=
-document.getElementById("audioPlayer");
+const intro = document.getElementById("intro");
+const noteScreen = document.getElementById("noteScreen");
+const player = document.getElementById("audioPlayer");
 
 /* =========================
-   SAVE
+   AUDIO DATA
 ========================= */
 
-function saveProgress(){
-
-    localStorage.setItem(
-        "heardAudios",
-        JSON.stringify(
-            [...heardAudios]
-        )
-    );
-
-    localStorage.setItem(
-        "secrets",
-        JSON.stringify(secrets)
-    );
-
-    updateAudioProgress();
-
-    function updateSecretProgress(){
-
-    const bar =
-        document.getElementById(
-            "secretProgressBar"
-        );
-
-    const text =
-        document.getElementById(
-            "secretProgressText"
-        );
-
-    const resetBtn =
-        document.getElementById(
-            "resetBtn"
-        );
-
-    const finishedBtn =
-        document.getElementById(
-            "finishedBtn"
-        );
-
-    const found =
-        Object.values(
-            secrets
-        ).filter(Boolean).length;
-
-    const percent =
-        (found / TOTAL_SECRETS) * 100;
-
-    bar.style.width =
-        percent + "%";
-
-    /* MAIN MENU */
-
-    if(
-        noteOpen !== true
-    ){
-
-        text.innerHTML =
-            `${found}/${TOTAL_SECRETS}`;
-
-        resetBtn.style.display =
-            "block";
-
-        finishedBtn.style.display =
-            "none";
-
-        return;
-    }
-
-    /* NOTE OPEN */
-
-    text.innerHTML = "";
-
-    resetBtn.style.display =
-        "none";
-
-    if(
-        found === TOTAL_SECRETS
-    ){
-
-        finishedBtn.style.display =
-            "block";
-
-    } else {
-
-        finishedBtn.style.display =
-            "none";
-    }
-    }
-}
-
-/* =========================
-   AUDIO BAR
-========================= */
-
-function updateAudioProgress(){
-
-    const text=
-        document.getElementById(
-            "audioProgressText"
-        );
-
-    const fill=
-        document.getElementById(
-            "audioFill"
-        );
-
-    const count=
-        heardAudios.size;
-
-    text.innerHTML=
-        `Audios Found: ${count}/20`;
-
-    fill.style.width=
-        `${(count/20)*100}%`;
-}
-
-/* =========================
-   OPEN NOTE
-========================= */
-
-function openNote(){
-
-     noteOpen = true;
-
-    updateSecretProgress();
-
-    intro.style.display="none";
-
-    noteScreen.style.display="flex";
-}
-
-/* =========================
-   GO BACK
-========================= */
-
-function goBack(){
-
-    noteOpen = false;
-
-    updateSecretProgress();
-
-    noteScreen.style.display="none";
-
-    intro.style.display="flex";
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-}
-
-/* =========================
-   AUDIO
-========================= */
-
-const audios=[
+const audios = [
     "audio1.m4a",
     "audio2.MP3",
     "audio3.MP3",
@@ -258,791 +62,640 @@ const audios=[
     "audio20.MP3"
 ];
 
+const secretAudio = "myhome.m4a";
+
+let heardAudios = new Set(
+    JSON.parse(localStorage.getItem("heardAudios")) || []
+);
+
 /* =========================
-   PLAY RANDOM AUDIO
+   SECRETS
 ========================= */
 
-function playRandomAudio(){
+const secrets = {
+    a0: false,
+    b7: false,
+    c1: false,
+    d1: false,
+    e7: false,
+    drag: false,
+    reward: false,
+    home: false
+};
 
-    const popup =
-        document.getElementById(
-            "audioPopup"
-        );
+const savedSecrets = JSON.parse(localStorage.getItem("yuriSecrets"));
+if (savedSecrets) Object.assign(secrets, savedSecrets);
 
-    const popupText =
-        document.getElementById(
-            "audioText"
-        );
+/* =========================
+   SAVE SYSTEM
+========================= */
 
-    const randomIndex =
-        Math.floor(
-            Math.random() * audios.length
-        );
+function saveProgress() {
+    localStorage.setItem("heardAudios", JSON.stringify([...heardAudios]));
+    localStorage.setItem("yuriSecrets", JSON.stringify(secrets));
 
-    const randomAudio =
-        audios[randomIndex];
-
-    const audioId =
-        String(randomIndex + 1);
-
-    const messages = [
-        "ily",
-        ":3",
-        "i like you",
-        "hehe",
-        "ur pretty",
-        "Elo",
-        "💜"
-    ];
-
-    const randomMessage =
-        messages[
-            Math.floor(
-                Math.random() *
-                messages.length
-            )
-        ];
-
-    /* SAVE ONLY IF NEW */
-
-if (!heardAudios.has(audioId)) {
-    heardAudios.add(audioId);
-    saveProgress();
+    updateAudioProgress();
+    updateSecretProgress();
 }
 
-    /* PLAY */
+/* =========================
+   AUDIO PROGRESS
+========================= */
+
+function updateAudioProgress() {
+    const count = heardAudios.size;
+
+    document.getElementById("audioProgressText").innerHTML =
+        `Audios Found: ${count}/${audios.length}`;
+
+    document.getElementById("audioFill").style.width =
+        (count / audios.length) * 100 + "%";
+
+    if (count === audios.length) {
+        document.getElementById("audioRewardBtn").style.display = "block";
+    }
+}
+
+/* =========================
+   SECRET PROGRESS
+========================= */
+
+function updateSecretProgress() {
+    const found = Object.values(secrets).filter(Boolean).length;
+
+    document.getElementById("secretProgressText").innerHTML =
+        `Secrets: ${found}/${TOTAL_SECRETS}`;
+
+    document.getElementById("secretFill").style.width =
+        (found / TOTAL_SECRETS) * 100 + "%";
+}
+
+/* =========================
+   CHECK ALL SECRETS
+========================= */
+
+function checkAllSecrets() {
+    saveProgress();
+
+    const done = Object.values(secrets).every(v => v === true);
+
+    if (done) {
+        const progress = document.getElementById("secretProgress");
+
+        progress.style.opacity = "0";
+        progress.style.transform = "translateY(20px)";
+        progress.style.transition = "1s";
+
+        setTimeout(() => {
+            progress.style.display = "none";
+            document.getElementById("finalSecretBtn").style.display = "block";
+        }, 1000);
+    }
+}
+
+/* =========================
+   OPEN / CLOSE NOTE
+========================= */
+
+function openNote() {
+    noteOpen = true;
+    intro.style.display = "none";
+    noteScreen.style.display = "flex";
+    updateSecretProgress();
+}
+
+function goBack() {
+    noteOpen = false;
+    noteScreen.style.display = "none";
+    intro.style.display = "flex";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* =========================
+   AUDIO PLAY
+========================= */
+
+function playRandomAudio() {
+    const popup = document.getElementById("audioPopup");
+    const popupText = document.getElementById("audioText");
+
+    const randomIndex = Math.floor(Math.random() * audios.length);
+    const randomAudio = audios[randomIndex];
+
+    const audioId = String(randomIndex + 1);
+
+    const messages = ["ily", ":3", "i like you", "hehe", "ur pretty", "💜"];
+
+    const msg = messages[Math.floor(Math.random() * messages.length)];
+
+    if (!heardAudios.has(audioId)) {
+        heardAudios.add(audioId);
+        saveProgress();
+    }
 
     player.pause();
-
     player.src = randomAudio;
-
-    player.volume = 1;
-
     player.load();
+    player.play().catch(() => {});
 
-    player.play().catch(()=>{});
-
-    /* SHOW */
-
-    popup.classList.add(
-        "showPopup"
-    );
-
-    popupText.innerHTML =
-        `Playing: ${randomIndex + 1}/20`;
-
-    player.onended = null;
+    popup.classList.add("showPopup");
+    popupText.innerHTML = `Playing: ${randomIndex + 1}/${audios.length}`;
 
     player.onended = () => {
+        popupText.innerHTML = msg;
 
-        /* 30% secret chance */
+        setTimeout(() => {
+            popup.classList.remove("showPopup");
+        }, 1200);
+    };
+    // 🔥 30% SECRET CHANCE (FIXED)
+    const showSecret = Math.random() < 0.3;
 
-        const showSecret = Math.random() < 0.3;
+    if (heardAudios.size >= audios.length && showSecret) {
 
-    if (
-        heardAudios.size === 20 &&
-        showSecret
-    ) {
+        secrets.c1 = true; // your secret point
+        checkAllSecrets();
 
-        if (!secrets.c1) {
-            secrets.c1 = true;
-            checkAllSecrets();
-        }
-
-        popupText.innerHTML =
-            "i also like hearing you talk 💜 (c1)";
+        popupText.innerHTML = "i also like hearing you talk 💜 (c1)";
 
         popup.classList.add("showPopup");
 
         setTimeout(() => {
             popup.classList.remove("showPopup");
         }, 2000);
-
-        } else {
-
-            /* normal msg */
-
-            popupText.innerHTML =
-                randomMessage;
-
-            setTimeout(() => {
-
-                popup.classList.remove(
-                    "showPopup"
-                );
-
-            }, 1000);
-        }
-    };
+    }
 }
 
 /* =========================
-   HEART ANIMATION
+   HEARTS
 ========================= */
 
-function spawnHearts(){
+let heartClicks = 0;
+let firstHeartClick = 0;
 
-    const emojis=[
-        "💜",
-        "❤️",
-        "💕",
-        "💖",
-        "💞",
-        "✨"
-    ];
+function spawnHearts() {
+    const emojis = ["💜", "❤️", "💕", "💖", "✨"];
 
-    /* SECRET HEART SPAM */
+    const now = Date.now();
 
-    const now=Date.now();
-
-    if(now-firstHeartClick>2000){
-
-        firstHeartClick=now;
-
-        heartClicks=0;
+    if (now - firstHeartClick > 2000) {
+        firstHeartClick = now;
+        heartClicks = 0;
     }
 
     heartClicks++;
 
-    if(heartClicks>=7){
+    if (heartClicks >= 7) {
+        const note = document.getElementById("secretNote");
+        note.style.display = "block";
+        note.innerHTML = "You found me! (b7)";
 
-        const note=
-        document.getElementById("secretNote");
-
-        note.style.display="block";
-
-        note.innerHTML=
-        "You found me! (b7)";
-
-        secrets.b7=true;
-
+        secrets.b7 = true;
         checkAllSecrets();
 
-        setTimeout(()=>{
-
-            note.style.display="none";
-
-        },3000);
-
-        heartClicks=0;
+        setTimeout(() => (note.style.display = "none"), 3000);
+        heartClicks = 0;
     }
 
-    /* HEART EFFECT */
+    for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+            const heart = document.createElement("div");
+            heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
 
-    for(let i=0;i<35;i++){
-
-        setTimeout(()=>{
-
-            let heart=
-            document.createElement("div");
-
-            heart.innerHTML=
-            emojis[
-                Math.floor(
-                    Math.random()*emojis.length
-                )
-            ];
-
-            Object.assign(heart.style,{
-
-                position:"fixed",
-
-                left:
-                Math.random()*100+"vw",
-
-                bottom:"-50px",
-
-                fontSize:
-                (Math.random()*25+18)+"px",
-
-                zIndex:"999999",
-
-                pointerEvents:"none",
-
-                opacity:"1",
-
-                transition:
-                "transform 5s ease-out, opacity 5s ease-out"
+            Object.assign(heart.style, {
+                position: "fixed",
+                left: Math.random() * 100 + "vw",
+                bottom: "-50px",
+                fontSize: Math.random() * 25 + 18 + "px",
+                zIndex: 999999,
+                pointerEvents: "none",
+                transition: "transform 5s ease-out, opacity 5s ease-out"
             });
 
             document.body.appendChild(heart);
 
-            const drift=
-            Math.random()*200-100;
+            setTimeout(() => {
+                heart.style.transform = `translateY(-120vh)`;
+                heart.style.opacity = "0";
+            }, 50);
 
-            const rotate=
-            Math.random()*720-360;
-
-            const scale=
-            Math.random()*1.5+1;
-
-            setTimeout(()=>{
-
-                heart.style.transform=
-                `translate(${drift}px,-120vh)
-                rotate(${rotate}deg)
-                scale(${scale})`;
-
-                heart.style.opacity="0";
-
-            },30);
-
-            setTimeout(()=>{
-
-                heart.remove();
-
-            },5000);
-
-        },i*120);
+            setTimeout(() => heart.remove(), 5000);
+        }, i * 100);
     }
 }
 
-let heartClicks=0;
-let firstHeartClick=0;
-
 /* =========================
-   SECRET SYSTEM
+   SECRET BOX
 ========================= */
 
-const secrets={
+document.addEventListener("keydown", e => {
+    if (e.key !== "Enter") return;
+    if (!noteOpen) return;
+    if (popupOpen) return;
 
-    a0:false,
-    b7:false,
-    c1:false,
-    d1:false,
-    e7:false,
-    drag:false
-};
+    document.getElementById("secretBox").style.display = "block";
+    document.getElementById("secretInput").focus();
+
+    secrets.a0 = true;
+    checkAllSecrets();
+
+    popupOpen = true;
+});
+
+function closeSecretBox() {
+    document.getElementById("secretBox").style.display = "none";
+    popupOpen = false;
+}
 
 /* =========================
-   SAVE SYSTEM
+   SECRET CODE CHECK
 ========================= */
 
-let heardAudios=
-    new Set(
-        JSON.parse(
-            localStorage.getItem("heardAudios")
-        ) || []
-    );
+const validCodes = ["marry me"];
 
-/* LOAD SAVED SECRETS */
+const fakeErrors = [
+    "Error: Too cute",
+    "Error: Love overload",
+    "Error: Hug required",
+    "Error: Heart stolen"
+];
 
-const savedSecrets=
-    JSON.parse(
-        localStorage.getItem("yuriSecrets")
-    );
+function checkSecretCode() {
+    const input = document.getElementById("secretInput").value.toLowerCase();
+    const error = document.getElementById("secretError");
 
-if(savedSecrets){
+    if(input.toLowerCase() === "100"){
 
-    Object.assign(
-        secrets,
-        savedSecrets
-    );
+    open100Panel();
+
+    return;
+
+}
+
+    if(input.toLowerCase() === "loviu"){
+
+    playLoveAnimation();
+
+    return;
+
+}
+
+    if (input === "home") {
+        secrets.home = true;
+        checkAllSecrets();
+
+        const audio = document.getElementById("audioPlayer");
+        audio.src = secretAudio;
+        audio.play().catch(() => {});
+
+        error.innerHTML = "home 💜";
+        return;
+    }
+
+    if (input === "0711") {
+        const today = new Date();
+        const unlock = new Date("2026-07-5");
+
+        if (today < unlock) {
+            error.innerHTML = "Come back later 💜";
+            return;
+        }
+
+        secrets.e7 = true;
+checkAllSecrets();
+
+closeSecretBox();
+openBirthdayPage();
+
+return;
+    }
+
+    if (validCodes.includes(input)) {
+        error.innerHTML = "Accepted 💜";
+    } else {
+        error.innerHTML =
+            fakeErrors[Math.floor(Math.random() * fakeErrors.length)];
+    }
+}
+
+/* =========================
+   FINAL
+========================= */
+
+function finishSecrets() {
+    alert("more coming soon 💜");
 }
 
 function resetProgress() {
 
-    /* clear saved progress */
-
+    // clear storage
     localStorage.removeItem("heardAudios");
     localStorage.removeItem("yuriSecrets");
 
-    /* clear audio set safely */
-
+    // reset audio tracking
     heardAudios.clear();
 
-    /* reset every secret safely */
-
+    // reset all secrets safely
     for (const key in secrets) {
         secrets[key] = false;
     }
 
-    /* update UI */
+    // reset UI safely
+    const audioText = document.getElementById("audioProgressText");
+    const audioFill = document.getElementById("audioFill");
 
-    updateAudioProgress();
-    updateSecretProgress();
+    const secretText = document.getElementById("secretProgressText");
+    const secretFill = document.getElementById("secretFill");
 
-    /* hide final button */
-
-    const finalBtn =
-        document.getElementById("finalSecretBtn");
-
-    if (finalBtn) {
-        finalBtn.style.display = "none";
+    if (audioText && audioFill) {
+        audioText.innerHTML = `Audios Found: 0/${audios.length}`;
+        audioFill.style.width = "0%";
     }
 
-    /* hide note */
-
-    const note =
-        document.getElementById("secretNote");
-
-    if (note) {
-        note.style.display = "none";
+    if (secretText && secretFill) {
+        secretText.innerHTML = `Secrets: 0/${Object.keys(secrets).length}`;
+        secretFill.style.width = "0%";
     }
 
-    /* save cleared state */
+    // hide UI buttons safely
+    const finalBtn = document.getElementById("finalSecretBtn");
+    if (finalBtn) finalBtn.style.display = "none";
 
-    saveProgress();
+    const rewardBtn = document.getElementById("audioRewardBtn");
+    if (rewardBtn) rewardBtn.style.display = "none";
+
+    const note = document.getElementById("secretNote");
+    if (note) note.style.display = "none";
+
+    const popup = document.getElementById("audioPopup");
+    if (popup) popup.classList.remove("showPopup");
 }
 
-/* =========================
-   FINAL SECRET CHECK
-========================= */
+window.showSeeSecret = function () {
+    const note = document.getElementById("secretNote");
 
-function checkAllSecrets(){
+    if (!note) return;
 
-    saveProgress();
+    note.style.display = "block";
+    note.innerHTML = "see you too (d1)";
 
-    updateSecretProgress();
-
-/* =========================
-SAVE PROGRESS
-========================= */
-
-function saveProgress() {
-    localStorage.setItem(
-        "yuriSecrets",
-        JSON.stringify(secrets)
-    );
-
-    localStorage.setItem(
-        "heardAudios",
-        JSON.stringify([...heardAudios])
-    );
-
-    updateAudioProgress();
-    updateSecretProgress();
-}
-
-    const done=
-        Object.values(secrets)
-        .every(v=>v===true);
-
-    if(done){
-
-        const progress=
-            document.getElementById(
-                "secretProgress"
-            );
-
-        progress.style.opacity="0";
-
-        progress.style.transform=
-            "translateY(20px)";
-
-        progress.style.transition=
-            "1s";
-
-        setTimeout(()=>{
-
-            progress.style.display="none";
-
-            document
-            .getElementById("finalSecretBtn")
-            .style.display="block";
-
-        },1000);
-    }
-}
-
-/* =========================
-   SECRET PROGRESS UI
-========================= */
-
-function updateSecretProgress(){
-
-    const total=
-        Object.keys(secrets).length;
-
-    const found=
-        Object.values(secrets)
-        .filter(v=>v).length;
-
-    document.getElementById(
-        "secretProgressText"
-    ).innerHTML=
-        `Secrets: ${found}/${total}`;
-
-    document.getElementById(
-        "secretFill"
-    ).style.width=
-        (found/total*100)+"%";
-}
-
-/* =========================
-   SEE SECRET
-========================= */
-
-function showSeeSecret(){
-
-    document
-    .getElementById("secretNote")
-    .style.display="block";
-
-    document
-    .getElementById("secretNote")
-    .innerHTML=
-        "see you too (d1)";
-
-    secrets.d1=true;
-
+    secrets.d1 = true;
     checkAllSecrets();
+
+    setTimeout(() => {
+        note.style.display = "none";
+    }, 2500);
+};
+
+let draggedPhoto = null;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+let noteRect = null;
+
+const photos = document.querySelectorAll(".edge-photo:not(.no-drag)");
+
+photos.forEach(photo => {
+
+    photo.addEventListener("mousedown", (e) => {
+
+        e.preventDefault();
+
+    draggedPhoto = photo;
+
+    if (!secrets.drag) {
+
+        secrets.drag = true;
+        checkAllSecrets();
+
+        const note = document.getElementById("secretNote");
+
+        note.innerHTML = "You found me! (drag)";
+        note.style.display = "block";
+
+        setTimeout(() => {
+            note.style.display = "none";
+        }, 2500);
+    }
+
+    const note = photo.closest(".note");
+    noteRect = note.getBoundingClientRect();
+
+    const rect = photo.getBoundingClientRect();
+
+    // Save the current rotation
+    const rotation = getComputedStyle(photo).transform;
+
+    // Freeze the photo exactly where it is
+    photo.style.left = (rect.left - noteRect.left) + "px";
+    photo.style.top = (rect.top - noteRect.top) + "px";
+    photo.style.right = "auto";
+    photo.style.bottom = "auto";
+    photo.style.transform = rotation;
+
+    photo.style.zIndex = "99999";
+    photo.style.cursor = "grabbing";
+
+    // Now get the NEW rectangle after freezing it
+    const newRect = photo.getBoundingClientRect();
+
+    dragOffsetX = e.clientX - newRect.left;
+    dragOffsetY = e.clientY - newRect.top;
+    });
+
+});
+
+document.addEventListener("mousemove", (e) => {
+
+    if (!draggedPhoto) return;
+
+    draggedPhoto.style.left =
+        (e.clientX - noteRect.left - dragOffsetX) + "px";
+
+    draggedPhoto.style.top =
+        (e.clientY - noteRect.top - dragOffsetY) + "px";
+
+});
+
+document.addEventListener("mouseup", () => {
+
+    if (!draggedPhoto) return;
+
+    draggedPhoto.style.cursor = "grab";
+    draggedPhoto.style.zIndex = "";
+
+    draggedPhoto = null;
+
+});
+
+function openBirthdayPage(){
+
+    document.getElementById("birthdayPage").style.display = "block";
+
+}
+
+function closeBirthdayPage(){
+
+    document.getElementById("birthdayPage").style.display = "none";
+
+}
+
+function openAudioReward() {
+
+    if (!secrets.reward) {
+    secrets.reward = true;
+    checkAllSecrets();
+}
+    const panel = document.getElementById("audioRewardPanel");
+    if (!panel) return;
+
+    panel.classList.add("show");
+}
+
+function closeAudioReward() {
+    const panel = document.getElementById("audioRewardPanel");
+    if (!panel) return;
+
+    panel.classList.remove("show");
+}
+
+function openHomePrompt() {
+
+    console.log("1");
+
+    const popup = document.getElementById("audioPopup");
+    console.log(popup);
+
+    const popupText = document.getElementById("audioText");
+    console.log(popupText);
+
+    popupText.innerHTML = 'psst... enter "home" in terminal :p';
+
+    popup.classList.add("showPopup");
+
+    setTimeout(() => {
+        popup.classList.remove("showPopup");
+    }, 2500);
+}
+
+function playLoveAnimation(){
+
+    const overlay = document.getElementById("loveOverlay");
+    const status = document.getElementById("loveStatus");
+    const container = document.getElementById("loveContainer");
+
+    overlay.style.display = "block";
+
+    container.innerHTML = "";
+
+    status.innerHTML = "Translating...";
 
     setTimeout(()=>{
 
-        document
-        .getElementById("secretNote")
-        .style.display="none";
+        status.innerHTML = "";
 
-    },3000);
+        let i = 0;
+
+        const timer = setInterval(()=>{
+
+            if(i >= loveLanguages.length){
+
+                clearInterval(timer);
+
+                setTimeout(()=>{
+
+                    overlay.style.display = "none";
+
+                },3000);
+
+                return;
+            }
+
+            const word = document.createElement("div");
+
+            word.className = "loveWord";
+
+            word.textContent = loveLanguages[i];
+
+            word.style.left = Math.random()*80+10+"%";
+            word.style.top = Math.random()*80+10+"%";
+
+            word.style.fontSize =
+                (22+Math.random()*20)+"px";
+
+            container.appendChild(word);
+
+            setTimeout(()=>word.remove(),3000);
+
+            i++;
+
+        },180);
+
+    },1500);
+
 }
 
-/* =========================
-   ENTER TERMINAL
-========================= */
+const loveLanguages = [
 
-document.addEventListener("keydown", e => {
+"Te amo",
+"Je t'aime",
+"Ti amo",
+"Ich liebe dich",
+"Eu te amo",
+"愛してる",
+"大好き",
+"사랑해",
+"我爱你",
+"Я тебя люблю",
+"Te iubesc",
+"Kocham cię",
+"Ik hou van jou",
+"Szeretlek",
+"Mahal kita",
+"Anh yêu em",
+"Aku cinta padamu",
+"Saya cinta kamu",
+"Σ' αγαπώ",
+"Rakastan sinua",
+"Jag älskar dig",
+"Jeg elsker dig",
+"Jeg elsker deg",
+"Volim te",
+"Miluji tě",
+"Ľúbim ťa",
+"Te aroha ahau ki a koe",
+"Aloha wau iā ʻoe",
+"Ngiyakuthanda",
+"Ndinokuthanda",
+"أنا أحبك",
+"אני אוהב אותך"
 
-    if (e.key !== "Enter") return;
-
-    /* only inside note */
-
-    if (!noteOpen) return;
-
-    /* popup visible? do nothing */
-
-    if (popupOpen) return;
-
-    const secretBox =
-        document.getElementById(
-            "secretBox"
-        );
-
-    /* already typing? */
-
-    if (
-        document.activeElement &&
-        document.activeElement.id ===
-        "secretInput"
-    ) {
-        return;
-    }
-
-    secretBox.style.display =
-        "block";
-
-    document
-        .getElementById(
-            "secretInput"
-        )
-        .focus();
-
-    secrets.a0 = true;
-
-    checkAllSecrets();
-});
-
-/* =========================
-   CLOSE SECRET BOX
-========================= */
-
-function closeSecretBox(){
-
-    document
-    .getElementById("secretBox")
-    .style.display="none";
-}
-
-/* =========================
-   SECRET CODE CHECKER
-========================= */
-
-const validCodes=[
-    "143",
-    "ily",
-    "yuri",
-    "love",
-    "a0",
-    "b7",
-    "c1"
 ];
 
-const fakeErrors=[
+function open100Panel(){
 
-    "Error: Too cute",
+    document.getElementById("love100Panel")
+        .classList.add("show");
 
-    "Error: You're too pretty",
+    document.getElementById("terminal")
+        .classList.add("terminalLeft");
 
-    "Error: Love overload",
-
-    "Error: Hug required",
-
-    "Error: Heart stolen"
-];
-
-function checkSecretCode(){
-
-    const input=
-        document
-        .getElementById("secretInput")
-        .value
-        .toLowerCase();
-
-    const error=
-        document
-        .getElementById("secretError");
-
-    /* SECRET 0711 */
-
-    if(input==="0711"){
-
-    const unlockDate =
-        new Date("2026-07-11T00:00:00");
-
-    const today =
-        new Date();
-
-    /* BEFORE JULY 11 */
-
-    if(today < unlockDate){
-
-        const secretBox =
-            document.getElementById(
-                "secretBox"
-            );
-
-        secretBox.style.left="32%";
-
-        const old =
-            document.getElementById(
-                "foundPopup"
-            );
-
-        if(old){
-            old.remove();
-        }
-
-        const found =
-            document.createElement("div");
-
-        found.id="foundPopup";
-
-        found.innerHTML=`
-            <button id="closeFoundPopup">✕</button>
-
-            <h2>
-                Come back on July 11 and try again!
-            </h2>
-
-            <p>
-                (I'm also waiting &lt;3)
-            </p>
-        `;
-
-        document.body.appendChild(found);
-
-        setTimeout(()=>{
-
-            found.classList.add(
-                "showFound"
-            );
-
-        },20);
-
-        document
-            .getElementById(
-                "closeFoundPopup"
-            )
-            .onclick=()=>{
-
-                found.remove();
-
-                secretBox.style.left="50%";
-            };
-
-        return;
-    }
-
-    /* JULY 11 OR LATER */
-
-    secrets.e7 = true;
-
-    checkAllSecrets();
-
-    error.innerHTML =
-        "Accepted 💜";
-
-    return;
 }
 
-    /* NORMAL VALID CODES */
+function close100Panel(){
 
-    if(validCodes.includes(input)){
+    document.getElementById("love100Panel")
+        .classList.remove("show");
 
-        error.innerHTML=
-            "Accepted 💜";
-    }
+    document.getElementById("terminal")
+        .classList.remove("terminalLeft");
 
-    else{
-
-        error.innerHTML=
-            fakeErrors[
-                Math.floor(
-                    Math.random()*fakeErrors.length
-                )
-            ];
-    }
 }
 
 /* =========================
-   PHOTO 8 SECRET
+   INIT
 ========================= */
-
-const photo8=
-document.querySelector(".p8");
-
-const photoSecret=
-document.getElementById("photoSecret");
-
-if(photo8){
-
-    photo8.addEventListener("mouseenter",()=>{
-
-        photo8.style.opacity=".3";
-
-        photoSecret.style.opacity="1";
-    });
-
-    photo8.addEventListener("mouseleave",()=>{
-
-        photo8.style.opacity="1";
-
-        photoSecret.style.opacity="0";
-    });
-}
-
-/* =========================
-   DRAGGABLE PHOTOS
-========================= */
-
-const photos=
-document.querySelectorAll(".edge-photo");
-
-photos.forEach(photo=>{
-
-     /* DISABLE DRAG FOR 8.png */
-
-    if(
-        photo.classList.contains("p8") ||
-        photo.closest(".photoSecretWrap")
-    ) return;
-
-    photo.style.pointerEvents="auto";
-
-    photo.style.cursor="grab";
-
-    let dragging=false;
-
-    let offsetX=0;
-    let offsetY=0;
-
-    photo.addEventListener("mousedown",e=>{
-
-        dragging=true;
-
-        secrets.drag=true;
-
-        checkAllSecrets();
-
-        offsetX=
-        e.clientX-photo.offsetLeft;
-
-        offsetY=
-        e.clientY-photo.offsetTop;
-
-        photo.style.zIndex="99999";
-
-        photo.style.cursor="grabbing";
-
-        e.preventDefault();
-    });
-
-    document.addEventListener("mousemove",e=>{
-
-        if(!dragging) return;
-
-        photo.style.left=
-        (e.clientX-offsetX)+"px";
-
-        photo.style.top=
-        (e.clientY-offsetY)+"px";
-    });
-
-    document.addEventListener("mouseup",()=>{
-
-        dragging=false;
-
-        photo.style.cursor="grab";
-    });
-});
-
-/* =========================
-   FINAL BUTTON
-========================= */
-
-function finishSecrets(){
-
-    alert(
-        "more coming soon 💜"
-    );
-}
-
-/* =========================
-   RESET SYSTEM
-========================= */
-
-function resetProgress() {
-
-    localStorage.removeItem("heardAudios");
-    localStorage.removeItem("yuriSecrets");
-
-    /* clear audios */
-    heardAudios.clear();
-
-    /* reset secrets */
-    secrets.a0 = false;
-    secrets.b7 = false;
-    secrets.c1 = false;
-    secrets.d1 = false;
-    secrets.e7 = false;
-    secrets.drag = false;
-
-    updateAudioProgress();
-    updateSecretProgress();
-
-    const finalBtn =
-        document.getElementById("finalSecretBtn");
-
-    if (finalBtn) {
-        finalBtn.style.display = "none";
-    }
-
-    const note =
-        document.getElementById("secretNote");
-
-    if (note) {
-        note.style.display = "none";
-    }
-
-    saveProgress();
-}
-
-/* =========================
-   INITIAL LOAD
-========================= */
-
-updateSecretProgress();
-
-checkAllSecrets();
 
 updateAudioProgress();
+updateSecretProgress();
+checkAllSecrets();

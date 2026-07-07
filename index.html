@@ -12,6 +12,16 @@
 
 </head>
 
+<div id="loveOverlay">
+
+    <div id="loveStatus">
+        Translating...
+    </div>
+
+    <div id="loveContainer"></div>
+
+</div>
+
 <body>
 
 <div id="loginScreen">
@@ -111,7 +121,7 @@
 
         <div class="photoSecretWrap">
 
-            <img src="8.png" class="edge-photo p8">
+            <img src="8.png" class="edge-photo p8 no-drag">
 
             <div id="photoSecret">
                 Press<br>
@@ -264,11 +274,11 @@
         <div id="audioFill"></div>
     </div>
 
-</div>
+    <button id="audioRewardBtn" onclick="openAudioReward()">
+        you know...
+    </button>
 
-<!-- =========================
-     SECRET PROGRESS
-========================= -->
+</div>
 
 <div id="secretProgress">
 
@@ -288,6 +298,193 @@
     </button>
 
     
+
+</div>
+
+
+
+<div id="audioRewardPanel">
+
+    <button id="rewardBackBtn" onclick="closeAudioReward()">
+        back
+    </button>
+    
+    <div id="rewardLeft">
+        <h2>you know...</h2>
+
+        <p>
+            if you suddenly lose yourself and go crazy to a point you might not even recognize me...
+            <br><br>
+            i'd build a fortress in my mind just to remember you exactly as you are, and find a way to bring you back the way you were,
+            i would never give up on you no matter the situation i'll do everything to have you as my 
+            <span class="secretWord" onclick="openHomePrompt()">home</span>.
+        </p>
+    </div>
+
+    <div id="rewardRight">
+        <img src="idmissyoualot.png" alt="drawing">
+    </div>
+
+</div>
+
+<div id="birthdayPage">
+
+    <button id="birthdayBackBtn" onclick="closeBirthdayPage()">
+        ← back
+    </button>
+
+    <div id="birthdayContent">
+
+        <h1>Happy Birthday sweetyy</h1>
+
+        <p>
+            helloooo, wanned to let ya know that im really happy to have you in my life, and that i love you so so so much.
+            i hope you have a good birthday even tho i can't physicaly be there with you and that i wasn't able to get you a
+            proper gift i decided to add certain things to this website for your birthday which i hope you like!
+        </p>
+
+        <p>
+            i also wanna tell you that you are really important and matter a lot to me, sorry if sometimes i might be annoying
+            clingy anything but i enjoy being that way with you, honestly you still handle me even tho i be doin it a lot sometimes... 
+            but being able to have some time to spend with you (even tho lately we havent spent much time together because of the sleeping hours)
+            its really fun and enjoyable being with you, hearin your voice, your laught, sometimes we fighting with the roblox kids or having tea of our own,
+            it all makes me really happy cus its with you and only you, even if sometimes we be doing different stuff just
+            being there with eachother its something i wouldn't change for anything in this world.
+        </p>
+
+        <p> 
+            you are the best and you should know that. im so happy that i met you and that im with you, i'll do everything i can to make you happy (sorry if at any
+            moment i might not show it but sometimes its hard for me to find a way to 😭) but i'll never give up on us ill be trying to do my best all the time
+            cus honestly you deserve that and a lot more, lov ya sweety i wish u all the good for your special day and that you enjoy it as much as you can 💕
+        </p>
+
+        <p>
+            also here are some extra codes for the terminal that you can check out :p
+        </p>
+        <p>
+            "loviu", "100", 
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     100 THINGS PANEL
+========================= -->
+
+<div id="love100Panel">
+
+    <button id="close100Panel" onclick="close100Panel()">
+        ✕
+    </button>
+
+    <h2>100 Things I Love About You </h2>
+
+    <div id="love100Content">
+
+    <p>1. your laught</p>
+    <p>2. your smile</p>
+    <p>3. your voice</p>
+    <p>4. your kindness</p>
+    <p>5. you're smort</p>
+    <p>6. your humor</p>
+    <p>7. your eyes</p>
+    <p>8. the way you are</p>
+    <p>9. your drawings</p>
+    <p>10. your creativity</p>
+    <p>11. your art styles</p>
+    <p>12. the effort you put in everything</p>
+    <p>13. the way you explain things</p>
+<p>14. the patience you have with me</p>
+<p>15. the passion you have for drawing</p>
+<p>16. the details you add into your art</p>
+<p>17. how realistic your drawings are most of the time</p>
+<p>18. how you helped me learn to draw</p>
+<p>19. the tips you've taught me</p>
+<p>20. how you always encourage me on not givin up</p>
+<p>21. how talented you are</p>
+<p>22. your imagination</p>
+<p>23. your dedication</p>
+<p>24. your determination</p>
+<p>25. your reactions</p>
+<p>26. your excitement when you're happy</p>
+<p>27. the way you talk about things you like</p>
+<p>28. your music taste</p>
+<p>29. your messages</p>
+<p>30. your sweet messages</p>
+<p>31. spending time with you</p>
+<p>32. laughing together</p>
+<p>33. playing Minecraft together</p>
+<p>34. starting worlds with you</p>
+<p>35. exploring caves together</p>
+<p>36. surviving to make a house together</p>
+<p>37. playing Roblox together</p>
+<p>38. playing random games with you</p>
+<p>39. drawing together</p>
+<p>40. watching our drawings when we're done</p>
+<p>41. watching each other improve</p>
+<p>42. playing Sky with you</p>
+<p>43. flying together in Sky</p>
+<p>44. holding your hand in Sky</p>
+<p>45. doing candles runs together</p>
+<p>46. making memories with you</p>
+<p>47. your support</p>
+<p>48. how you try to understand me</p>
+<p>49. how you listen to me (sometimes)</p>
+<p>50. how comfortable you make me feel</p>
+<p>51. your honesty</p>
+<p>52. your cute messages x2</p>
+<p>53. when you show me a drawing you made</p>
+<p>54. how proud I feel when I see your art</p>
+<p>55. seeing you when you're drawing</p>
+<p>56. your determination to improve</p>
+<p>57. the little things you notice while drawing (cus i aint seein nothing)</p>
+<p>58. your curiosity</p>
+<p>59. how fun you are to be around with :p</p>
+<p>60. the memories we've made together</p>
+<p>61. the memories we'll make too Owo</p>
+<p>62. random ideas for anything</p>
+<p>63. how creative you are in games</p>
+<p>64. how you decorate things in minecraft for our base >:d</p>
+<p>65. when you show me characters you like</p>
+<p>66. your reactions when something is funny</p>
+<p>67. how caring you are</p>
+<p>68. how sweet you are</p>
+<p>69. your uniqueness</p>
+<p>70. how genuine you are</p>
+<p>71. your determination to continue on art</p>
+<p>72. how much effort you put into everything</p>
+<p>73. how you inspire me</p>
+<p>74. how you motivate me to improve</p>
+<p>75. how you make me want to be better</p>
+<p>76. your habits</p>
+<p>77. the way you type</p>
+<p>78. your favorite things</p>
+<p>79. your excitement over certain things</p>
+<p>80. when you're proud of something</p>
+<p>81. the way you make me laugh</p>
+<p>82. how easy it is to talk to you</p>
+<p>83. how safe I feel with you</p>
+<p>84. how you make ordinary days feel special</p>
+<p>85. the way we can be silly together</p>
+<p>86. your company</p>
+<p>87. how much we've played together</p>
+<p>88. every adventure game we've shared</p>
+<p>89. every game we've beaten together</p>
+<p>90. every drawing we've shared (like matching drawings)</p>
+<p>91. every conversation we've had (lov all of them :3)</p>
+<p>92. every moment we've spent together</p>
+<p>93. your beautiful heart</p>
+<p>94. your beautiful mind</p>
+<p>95. your beautiful soul</p>
+<p>96. the person you are</p>
+<p>97. the person you're becoming</p>
+<p>98. the happiness you bring into my life</p>
+<p>99. the way you refer to certain things</p>
+<p>100. because you are you 💕</p>
+
+    </div>
 
 </div>
 

@@ -276,7 +276,7 @@ button:hover{
 ========================= */
 
 .edge-photo{
-    position:absolute!important;
+    position:absolute;
 
     width:105px;
     height:120px;
@@ -290,7 +290,7 @@ button:hover{
     padding:5px;
     border:5px solid white;
 
-    z-index:0!important;
+    z-index:0;
 
     pointer-events:auto;
     cursor:grab;
@@ -477,7 +477,7 @@ button:hover{
 
     gap:12px;
 
-    z-index:999999;
+    z-index:1000001;
 
     opacity:0;
 
@@ -676,8 +676,12 @@ button:hover{
 .photoSecretWrap:hover .p8{
 
     opacity:.3;
+
 }
 
+.photoSecretWrap:hover #photoSecret {
+    opacity: 1;
+}
 /* =========================
    SECRET NOTE
 ========================= */
@@ -1039,4 +1043,361 @@ body{
         );
 
     transition:.4s;
+}
+
+#audioRewardBtn{
+    display:none;
+    width:100%;
+    margin-top:10px;
+    padding:10px;
+    border-radius:12px;
+    background:linear-gradient(to right,#c061ff,#ff66c4);
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+#audioRewardPanel{
+    position:fixed;
+    top:0;
+    right:-100%;
+    width:100%;
+    height:100vh;
+    display:flex;
+    background:rgba(10,0,20,0.92);
+    backdrop-filter:blur(12px);
+    transition:0.9s cubic-bezier(.12,1.1,.2,1);
+    z-index:999999;
+}
+
+#audioRewardPanel.show{
+    right:0;
+}
+
+#rewardLeft{
+    width:50%;
+    padding:60px;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align:left;
+}
+
+#rewardLeft h2{
+    font-size:3rem;
+    margin-bottom:20px;
+    color:#ff9ae6;
+}
+
+#rewardLeft p{
+    font-size:1.4rem;
+    line-height:2;
+    opacity:0.9;
+}
+
+#rewardRight{
+    width:50%;
+    height:100%;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:flex-end;
+    justify-content:flex-end;
+}
+
+/* THE DRAWING */
+#rewardRight img{
+    position:absolute;
+
+    right:-10%;
+    bottom:-10%;
+
+    width:120%;
+    height:auto;
+
+    object-fit:contain;
+
+    transform:
+        rotate(0)
+        scale(1);
+
+    transform-origin: bottom right;
+
+    filter:drop-shadow(0 0 25px rgba(255,0,200,0.25));
+
+    pointer-events:none;
+}
+
+#rewardBackBtn{
+    position:absolute;
+    top:20px;
+    left:20px;
+
+    padding:10px 18px;
+
+    border:none;
+    border-radius:14px;
+
+    background:rgba(255,255,255,0.08);
+    color:white;
+
+    font-size:1rem;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(10px);
+
+    transition:.3s;
+
+    z-index:10;
+}
+
+#rewardBackBtn:hover{
+    transform:scale(1.05);
+    background:rgba(255,255,255,0.15);
+}
+
+/* =========================
+   BIRTHDAY PAGE
+========================= */
+
+#birthdayPage{
+
+    position:fixed;
+    inset:0;
+
+    display:none;
+
+    background:
+        linear-gradient(135deg,#2b003a,#5b1480,#ff66c4);
+
+    z-index:99999999;
+
+    overflow-y:auto;
+
+    padding:60px;
+}
+
+#birthdayContent{
+
+    max-width:900px;
+
+    margin:80px auto;
+
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:30px;
+
+    padding:60px;
+
+    color:white;
+
+    text-align:center;
+
+    box-shadow:0 0 40px rgba(0,0,0,.35);
+}
+
+#birthdayContent h1{
+
+    font-size:4rem;
+
+    margin-bottom:40px;
+}
+
+#birthdayContent p{
+
+    font-size:1.6rem;
+
+    line-height:2;
+}
+
+#birthdayBackBtn{
+
+    position:fixed;
+
+    top:25px;
+    left:25px;
+
+    z-index:2;
+}
+
+#loveOverlay{
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.88);
+
+    display:none;
+
+    z-index:99999999;
+
+    overflow:hidden;
+}
+
+#loveStatus{
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    color:white;
+
+    font-size:2rem;
+
+    font-family:monospace;
+
+    letter-spacing:2px;
+}
+
+#loveContainer{
+
+    position:absolute;
+    inset:0;
+}
+
+.loveWord{
+
+    position:absolute;
+
+    color:white;
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    pointer-events:none;
+
+    opacity:0;
+
+    animation:loveFade 3s forwards;
+}
+
+@keyframes loveFade{
+
+    0%{
+
+        opacity:0;
+        transform:scale(.6);
+
+    }
+
+    15%{
+
+        opacity:1;
+        transform:scale(1);
+
+    }
+
+    85%{
+
+        opacity:1;
+
+    }
+
+    100%{
+
+        opacity:0;
+        transform:scale(1.4);
+
+    }
+
+}
+
+/* =========================
+   100 THINGS PANEL
+========================= */
+
+#love100Panel{
+
+    position:fixed;
+
+    top:0;
+    right:-45%;
+
+    width:40%;
+    height:100%;
+
+    background:#f8f1ff;
+
+    color:#222;
+
+    box-shadow:-8px 0 35px rgba(0,0,0,.35);
+
+    transition:.6s ease;
+
+    z-index:9999999;
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+#love100Panel.show{
+
+    right:0;
+
+}
+
+#love100Panel h2{
+
+    margin:30px;
+
+    text-align:center;
+
+    color:#8d4bff;
+
+}
+
+#love100Content{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:30px;
+
+    line-height:1.8;
+
+}
+
+#love100Content p{
+
+    margin-bottom:18px;
+
+}
+
+#close100Panel{
+
+    position:absolute;
+
+    top:18px;
+    right:18px;
+
+    width:38px;
+    height:38px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+}
+
+#terminal{
+
+    transition:.6s ease;
+
+}
+
+#terminal.terminalLeft{
+
+    transform:translateX(-22%);
 }
