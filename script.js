@@ -355,7 +355,7 @@ function checkSecretCode() {
 
     if (input === "0711") {
         const today = new Date();
-        const unlock = new Date("2026-07-11");
+        const unlock = new Date("2026-07-10");
 
         if (today < unlock) {
             error.innerHTML = "Only for your birthday! >:3";
