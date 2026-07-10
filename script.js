@@ -355,10 +355,10 @@ function checkSecretCode() {
 
     if (input === "0711") {
         const today = new Date();
-        const unlock = new Date("2026-07-5");
+        const unlock = new Date("2026-07-11");
 
         if (today < unlock) {
-            error.innerHTML = "Come back later 💜";
+            error.innerHTML = "Only for your birthday! >:3";
             return;
         }
 
